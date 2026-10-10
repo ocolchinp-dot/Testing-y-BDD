@@ -1,0 +1,30 @@
+name: Pruebas BDD con Selenium
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  pruebas:
+    name: Ejecutar escenarios BDD
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Descargar el código
+        uses: actions/checkout@v4
+
+      - name: Configurar Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Instalar Google Chrome
+        uses: browser-actions/setup-chrome@v1
+        with:
+          chrome-version: stable
+
+      - name: Instalar dependencias
+        run: pip install -r requirements.txt
+
+      - name: Ejecutar pruebas BDD
+        run: pytest -q
